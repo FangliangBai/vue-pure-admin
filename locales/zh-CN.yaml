@@ -213,9 +213,11 @@ login:
   pureTest: 模拟测试
   pureTip: 扫码后点击"确认"，即可完成登录
   pureDefinite: 确定
+  pureCreateAccount: 创建账户
   pureLoginSuccess: 登录成功
   pureLoginFail: 登录失败
   pureRegisterSuccess: 注册成功
+  pureRegisterFail: 注册失败
   pureTickPrivacy: 请勾选隐私政策
   pureReadAccept: 我已仔细阅读并接受
   purePrivacyPolicy: 《隐私政策》

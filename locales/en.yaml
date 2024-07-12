@@ -213,9 +213,11 @@ login:
   pureTest: Mock Test
   pureTip: After scanning the code, click "Confirm" to complete the login
   pureDefinite: Definite
+  pureCreateAccount: Create Account
   pureLoginSuccess: Login Success
   pureLoginFail: Login Fail
   pureRegisterSuccess: Regist Success
+  pureRegisterFail: Regist Fail
   pureTickPrivacy: Please tick Privacy Policy
   pureReadAccept: I have read it carefully and accept
   purePrivacyPolicy: Privacy Policy

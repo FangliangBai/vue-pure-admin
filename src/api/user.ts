@@ -1,4 +1,11 @@
 import { http } from "@/utils/http";
+import { baseUrlApi } from "@/api/utils";
+
+export type GeneralResult = {
+  success: boolean;
+  data: any;
+  message: string;
+};
 
 export type UserResult = {
   success: boolean;
@@ -66,14 +73,29 @@ type ResultTable = {
   };
 };
 
+/** 注册 */
+export const getRegister = (data?: object) => {
+  return http.request<GeneralResult>("post", baseUrlApi("system/register"), {
+    data
+  });
+};
+
 /** 登录 */
 export const getLogin = (data?: object) => {
-  return http.request<UserResult>("post", "/login", { data });
+  return http.request<UserResult>("post", baseUrlApi("system/login"), {
+    data
+  });
 };
 
 /** 刷新`token` */
 export const refreshTokenApi = (data?: object) => {
-  return http.request<RefreshTokenResult>("post", "/refresh-token", { data });
+  return http.request<RefreshTokenResult>(
+    "post",
+    baseUrlApi("system/refresh-token"),
+    {
+      data
+    }
+  );
 };
 
 /** 账户设置-个人信息 */

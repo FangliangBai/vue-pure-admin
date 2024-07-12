@@ -12,6 +12,7 @@ import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import Lock from "@iconify-icons/ri/lock-fill";
 import Iphone from "@iconify-icons/ep/iphone";
 import User from "@iconify-icons/ri/user-3-fill";
+import { getRegister } from "@/api/user";
 
 const { t } = useI18n();
 const checked = ref(false);
@@ -48,12 +49,29 @@ const onUpdate = async (formEl: FormInstance | undefined) => {
   await formEl.validate(valid => {
     if (valid) {
       if (checked.value) {
+        getRegister(ruleForm)
+          .then(res => {
+            if (res.success) {
+              message(transformI18n($t("login.pureRegisterSuccess")), {
+                type: "success"
+              });
+              loading.value = false;
+            } else {
+              message(res.message, {
+                type: "error"
+              });
+              loading.value = false;
+            }
+          })
+          .catch(() => {
+            message(transformI18n($t("login.pureRegisterFail")), {
+              type: "error"
+            });
+            loading.value = false;
+          });
         // 模拟请求，需根据实际开发进行修改
         setTimeout(() => {
-          message(transformI18n($t("login.pureRegisterSuccess")), {
-            type: "success"
-          });
-          loading.value = false;
+          onBack();
         }, 2000);
       } else {
         loading.value = false;
@@ -100,40 +118,40 @@ function onBack() {
       </el-form-item>
     </Motion>
 
-    <Motion :delay="100">
-      <el-form-item prop="phone">
-        <el-input
-          v-model="ruleForm.phone"
-          clearable
-          :placeholder="t('login.purePhone')"
-          :prefix-icon="useRenderIcon(Iphone)"
-        />
-      </el-form-item>
-    </Motion>
+    <!--<Motion :delay="100">-->
+    <!--  <el-form-item prop="phone">-->
+    <!--    <el-input-->
+    <!--      v-model="ruleForm.phone"-->
+    <!--      clearable-->
+    <!--      :placeholder="t('login.purePhone')"-->
+    <!--      :prefix-icon="useRenderIcon(Iphone)"-->
+    <!--    />-->
+    <!--  </el-form-item>-->
+    <!--</Motion>-->
 
-    <Motion :delay="150">
-      <el-form-item prop="verifyCode">
-        <div class="w-full flex justify-between">
-          <el-input
-            v-model="ruleForm.verifyCode"
-            clearable
-            :placeholder="t('login.pureSmsVerifyCode')"
-            :prefix-icon="useRenderIcon('ri:shield-keyhole-line')"
-          />
-          <el-button
-            :disabled="isDisabled"
-            class="ml-2"
-            @click="useVerifyCode().start(ruleFormRef, 'phone')"
-          >
-            {{
-              text.length > 0
-                ? text + t("login.pureInfo")
-                : t("login.pureGetVerifyCode")
-            }}
-          </el-button>
-        </div>
-      </el-form-item>
-    </Motion>
+    <!--<Motion :delay="150">-->
+    <!--  <el-form-item prop="verifyCode">-->
+    <!--    <div class="w-full flex justify-between">-->
+    <!--      <el-input-->
+    <!--        v-model="ruleForm.verifyCode"-->
+    <!--        clearable-->
+    <!--        :placeholder="t('login.pureSmsVerifyCode')"-->
+    <!--        :prefix-icon="useRenderIcon('ri:shield-keyhole-line')"-->
+    <!--      />-->
+    <!--      <el-button-->
+    <!--        :disabled="isDisabled"-->
+    <!--        class="ml-2"-->
+    <!--        @click="useVerifyCode().start(ruleFormRef, 'phone')"-->
+    <!--      >-->
+    <!--        {{-->
+    <!--          text.length > 0-->
+    <!--            ? text + t("login.pureInfo")-->
+    <!--            : t("login.pureGetVerifyCode")-->
+    <!--        }}-->
+    <!--      </el-button>-->
+    <!--    </div>-->
+    <!--  </el-form-item>-->
+    <!--</Motion>-->
 
     <Motion :delay="200">
       <el-form-item prop="password">
@@ -179,7 +197,7 @@ function onBack() {
           :loading="loading"
           @click="onUpdate(ruleFormRef)"
         >
-          {{ t("login.pureDefinite") }}
+          {{ t("login.pureCreateAccount") }}
         </el-button>
       </el-form-item>
     </Motion>
