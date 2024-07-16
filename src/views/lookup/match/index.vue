@@ -1,6 +1,11 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref } from "vue";
 import UploadFilled from "@iconify-icons/ep/upload-filled";
+import { formatToken, getToken } from "@/utils/auth";
+import { useUserStoreHook } from "@/store/modules/user";
+
+const uploadUrl = "/api/specmatch/upload-spec-file-temp/";
+const username = useUserStoreHook()?.username;
 
 const activeStep = ref(0);
 
@@ -23,16 +28,24 @@ const onClickReset = () => {
       </template>
       <div class="drop-shadow-xl mt-5 mb-10">
         <el-steps :active="activeStep" align-center>
-          <el-step title="Upload" description="drag and drop spectrum file." />
-          <el-step title="Process" description="process your spectral data" />
-          <el-step title="Match" description="Match with our spectra" />
+          <el-step description="drag and drop spectrum file." title="Upload" />
+          <el-step
+            description="pre-process spectral data"
+            title="Pre-process"
+          />
+          <el-step description="Match with our spectra" title="Match" />
         </el-steps>
       </div>
       <div class="flex justify-center">
         <el-upload
+          :action="uploadUrl"
+          :data="{
+            file_name: 'abc',
+            user_info: username
+          }"
+          :headers="{ Authorization: formatToken(getToken().accessToken) }"
           class="w-4/12"
           drag
-          action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
         >
           <el-icon class="el-icon--upload">
             <IconifyIconOffline :icon="UploadFilled" />

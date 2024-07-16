@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { http } from "@/utils/http";
 import { baseUrlApi } from "@/api/utils";
 import { reactive, ref } from "vue";
@@ -97,9 +97,9 @@ const searchMolecule = () => {
         <el-form-item prop="search">
           <el-input
             v-model="searchForm.search"
-            placeholder="Start your search by typing a molecule name"
             :prefix-icon="useRenderIcon('ri:search-line')"
             clearable
+            placeholder="Start your search by typing a molecule name"
           >
             <template #append>
               <el-button
@@ -113,21 +113,21 @@ const searchMolecule = () => {
 
       <el-table
         :data="searchResult"
-        style="width: 100%"
+        fit
         height="350px"
         size="large"
         stripe
-        fit
+        style="width: 100%"
       >
-        <el-table-column prop="name" label="Name" />
-        <el-table-column prop="formula" label="Formula" />
+        <el-table-column label="Name" prop="name" />
+        <el-table-column label="Formula" prop="formula" />
         <el-table-column fixed="right" label="Operations" width="120">
           <template #default="scope">
             <el-button
+              :icon="useRenderIcon('ri:book-read-line')"
               plain
               size="small"
               type="primary"
-              :icon="useRenderIcon('ri:book-read-line')"
               @click="onNavigateToDetail(scope.row.name)"
             >
               Detail
@@ -138,11 +138,11 @@ const searchMolecule = () => {
       <template v-if="searchResult.length" #footer>
         <el-pagination
           v-model:currentPage="pagination.current"
-          class="float-right m-5"
-          :page-size="pagination.pageSize"
-          :total="pagination.total"
-          :page-sizes="[12, 24, 36]"
           :background="true"
+          :page-size="pagination.pageSize"
+          :page-sizes="[12, 24, 36]"
+          :total="pagination.total"
+          class="float-right m-5"
           layout="total, sizes, prev, pager, next, jumper"
           @size-change="onPageSizeChange"
           @current-change="onCurrentChange"

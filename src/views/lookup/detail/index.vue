@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { useRoute } from "vue-router";
 import { ref } from "vue";
 import { TabsPaneContext } from "element-plus";
@@ -72,9 +72,9 @@ const option = ref({
           </div>
         </el-col>
         <el-col :span="16">
-          <el-table :data="tableData" max-height="400" stripe fit>
-            <el-table-column prop="name" label="Name" />
-            <el-table-column prop="address" label="Address" />
+          <el-table :data="tableData" fit max-height="400" stripe>
+            <el-table-column label="Name" prop="name" />
+            <el-table-column label="Address" prop="address" />
           </el-table>
         </el-col>
       </el-row>
@@ -96,12 +96,12 @@ const option = ref({
       </template>
       <el-row>
         <el-col :span="8">
-          <v-chart class="chart" :option="option" autoresize />
+          <v-chart :option="option" autoresize class="chart" />
         </el-col>
         <el-col :span="16">
-          <el-table :data="tableData" max-height="400" stripe fit>
-            <el-table-column prop="name" label="Name" />
-            <el-table-column prop="address" label="Address" />
+          <el-table :data="tableData" fit max-height="400" stripe>
+            <el-table-column label="Name" prop="name" />
+            <el-table-column label="Address" prop="address" />
           </el-table>
         </el-col>
       </el-row>
@@ -109,7 +109,7 @@ const option = ref({
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .chart {
   height: 300px;
 }
